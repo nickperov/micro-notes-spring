@@ -12,11 +12,11 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring.verion>5.3.23</spring.verion>
-    <jackson.version>2.13.4</jackson.version>
-    <jackson-databind.version>2.13.4.2</jackson-databind.version>
-    <jetty.version>9.4.49.v20220914</jetty.version>
-    <slf4j.version>2.0.3</slf4j.version>
+    <spring.verion>6.0.2</spring.verion>
+    <jackson.version>2.14.0</jackson.version>
+    <jackson-databind.version>2.14.0</jackson-databind.version>
+    <jetty.version>11.0.12</jetty.version>
+    <slf4j.version>2.0.5</slf4j.version>
     <javax.servlet.version>4.0.1</javax.servlet.version>
     <junit.version>4.13.2</junit.version>
   </properties>
@@ -53,9 +53,9 @@
       <version>${jackson-databind.version}</version>
     </dependency>
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>${javax.servlet.version}</version>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>6.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
