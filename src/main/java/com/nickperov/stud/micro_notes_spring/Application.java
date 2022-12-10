@@ -60,7 +60,6 @@ public class Application {
             server.setHandler(contextHandler);
             server.start();
             logger.info("Jetty server started");
-            context.refresh();
             isRunning = true;
             server.join();
         } catch (Exception e) {
