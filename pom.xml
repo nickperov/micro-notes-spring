@@ -19,6 +19,8 @@
     <slf4j.version>2.0.5</slf4j.version>
     <javax.servlet.version>4.0.1</javax.servlet.version>
     <junit.version>4.13.2</junit.version>
+    <app-name>micro-notes-t1</app-name>
+    <main-class>com.nickperov.stud.micro_notes_spring.Application</main-class>
   </properties>
 
   <dependencies>
@@ -103,11 +105,11 @@
               <goal>single</goal>
             </goals>
             <configuration>
+              <finalName>${app-name}</finalName>
+              <appendAssemblyId>false</appendAssemblyId>
               <archive>
                 <manifest>
-                  <mainClass>
-                    com.nickperov.stud.micro_notes_spring.Application
-                  </mainClass>
+                  <mainClass>${main-class}</mainClass>
                 </manifest>
               </archive>
               <descriptorRefs>
