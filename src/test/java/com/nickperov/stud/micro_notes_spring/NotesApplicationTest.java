@@ -35,11 +35,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 public class NotesApplicationTest {
 
+    private static final String BASE_URL = "/api/notes";
     private static final Logger logger = LoggerFactory.getLogger(NotesApplicationTest.class);
-
     private static MockMvc mockMvc;
     private static NotesServiceImpl notesService;
-
     private final ObjectMapper mapper = new ObjectMapper();
 
     @BeforeClass
@@ -281,7 +280,7 @@ public class NotesApplicationTest {
     }
 
     private Note createNoteSuccess(final String noteText) throws Exception {
-        final var result = mockMvc.perform(post("/api/notes/").contentType(MediaType.TEXT_PLAIN).content(noteText)).andExpect(status().isOk()).andReturn();
+        final var result = mockMvc.perform(post(BASE_URL).contentType(MediaType.TEXT_PLAIN).content(noteText)).andExpect(status().isOk()).andReturn();
         return mapper.readValue(result.getResponse().getContentAsString(), NoteDTO.class);
     }
 
@@ -302,11 +301,11 @@ public class NotesApplicationTest {
     }
 
     private void updateNoteBadUrl(final NoteDTO note) throws Exception {
-        performUpdateNote(note, "/api/notes/" + UUID.randomUUID()).andExpect(status().isBadRequest()).andReturn();
+        performUpdateNote(note, BASE_URL + '/' + UUID.randomUUID()).andExpect(status().isBadRequest()).andReturn();
     }
 
     private ResultActions performUpdateNote(final NoteDTO note) throws Exception {
-        return performUpdateNote(note, "/api/notes/" + note.getId());
+        return performUpdateNote(note, BASE_URL + '/' + note.getId());
     }
 
     private ResultActions performUpdateNote(final NoteDTO note, final String url) throws Exception {
@@ -325,7 +324,7 @@ public class NotesApplicationTest {
     }
 
     private ResultActions performGetNote(final UUID id) throws Exception {
-        return mockMvc.perform(get("/api/notes/" + id.toString()).contentType(MediaType.APPLICATION_JSON));
+        return mockMvc.perform(get(BASE_URL + '/' + id.toString()).contentType(MediaType.APPLICATION_JSON));
     }
 
     private NoteDTO getNoteSuccess(final URI uri) throws Exception {
@@ -336,7 +335,7 @@ public class NotesApplicationTest {
     }
 
     private List<NoteDTO> getNotesSuccess() throws Exception {
-        final var result = mockMvc.perform(get("/api/notes/").contentType(MediaType.APPLICATION_JSON))
+        final var result = mockMvc.perform(get(BASE_URL).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
         return mapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
@@ -344,7 +343,7 @@ public class NotesApplicationTest {
     }
 
     private String addNoteSuccess(final NoteDTO note) throws Exception {
-        final var result = mockMvc.perform(put("/api/notes/" + note.getId()).contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsBytes(note)))
+        final var result = mockMvc.perform(put(BASE_URL + '/' + note.getId()).contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsBytes(note)))
                 .andExpect(status().isCreated())
                 .andReturn();
         return result.getResponse().getHeader("Location");
@@ -359,6 +358,6 @@ public class NotesApplicationTest {
     }
 
     private ResultActions performNoteDelete(final UUID id) throws Exception {
-        return mockMvc.perform(delete("/api/notes/" + id.toString()).contentType(MediaType.APPLICATION_JSON));
+        return mockMvc.perform(delete(BASE_URL + '/' + id.toString()).contentType(MediaType.APPLICATION_JSON));
     }
 }

@@ -22,7 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api/notes/")
+@RequestMapping("/api/notes")
 public class NotesController {
 
     private final NotesService notesService;
@@ -37,7 +37,7 @@ public class NotesController {
         return notesService.getAllNotes().stream().map(NoteDTO::new).collect(Collectors.toList());
     }
 
-    @GetMapping("{note_id}")
+    @GetMapping("/{note_id}")
     public ResponseEntity<NoteDTO> getNote(@PathVariable("note_id") final UUID noteId) {
         final var note = notesService.getNote(noteId);
         if (note != null) {
@@ -52,7 +52,7 @@ public class NotesController {
         return new NoteDTO(notesService.createNote(noteText));
     }
 
-    @PutMapping("{note_id}")
+    @PutMapping("/{note_id}")
     public ResponseEntity<?> updateNote(@PathVariable("note_id") final UUID noteId, @RequestBody NoteDTO note) {
         if (note.getId() == null || !note.getId().equals(noteId) || note.getText() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
@@ -66,7 +66,7 @@ public class NotesController {
         }
     }
 
-    @DeleteMapping("{note_id}")
+    @DeleteMapping("/{note_id}")
     public ResponseEntity<?> deleteNote(@PathVariable("note_id") final UUID noteId) {
         final var result = notesService.deleteNote(noteId);
         return result ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
